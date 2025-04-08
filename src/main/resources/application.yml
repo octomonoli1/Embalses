@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: Embalses
+  profiles:
+    active: default
+  datasource:
+    url: jdbc:mysql://localhost:3306/embalses
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
