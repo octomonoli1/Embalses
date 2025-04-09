@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +20,14 @@ public class EmbalsesController {
     @Autowired
     private EmbalseService embalseService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Embalse>> list(){
         return ResponseEntity.ok(this.embalseService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Embalse> findById(@PathVariable("id") long id){
+        return this.embalseService.findById(id).map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 }

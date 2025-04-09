@@ -28,6 +28,12 @@ create table localidad(
     constraint fk_provincia foreign key (provincia) references provincia(cod)
 );
 
+create table imagen(
+	id int primary key auto_increment,
+    nombre varchar(100),
+    url varchar(250)
+);
+
 create table embalse(
 	id int primary key auto_increment,
     nombre varchar(100),
@@ -35,13 +41,11 @@ create table embalse(
     porcentaje_actual decimal(16,2),
     es_navegable boolean default false,
     localidad int,
-    constraint fk_localidad foreign key (localidad) references localidad(cod_postal)
-);
-
-create table imagen(
-	id int primary key auto_increment,
-    nombre varchar(100),
-    url varchar(250)
+    tipo_presa int,
+    imagen int,
+    constraint fk_localidad foreign key (localidad) references localidad(cod_postal),
+    constraint fk_tipo_presa foreign key (tipo_presa) references tipo_presa(id),
+    constraint fk_imagen_embalse foreign key (imagen) references imagen(id)
 );
 
 create table especie(
@@ -50,7 +54,9 @@ create table especie(
     nombre_comun varchar(100),
     origen varchar(100),
     url_imagen varchar(250),
-    peligro boolean default false
+    peligro boolean default false,
+    imagen int,
+    constraint fk_imagen_especie foreign key (imagen) references imagen(id)
 );
 
 create table habitat(
@@ -61,7 +67,7 @@ create table habitat(
     constraint fk_especie foreign key (especie) references especie(id)
 );
 
--- Inserts 
+-- Inserts
 INSERT INTO tipo_presa (nombre) VALUES ('Presa de gravedad');
 INSERT INTO tipo_presa (nombre) VALUES ('Presa de arco');
 INSERT INTO tipo_presa (nombre) VALUES ('Presa de tierra');
@@ -332,16 +338,16 @@ INSERT INTO localidad (cod_postal, nombre, provincia) VALUES (10017, 'Badajoz', 
 INSERT INTO localidad (cod_postal, nombre, provincia) VALUES (10018, 'La Vera', 42);  -- Cáceres
 INSERT INTO localidad (cod_postal, nombre, provincia) VALUES (10019, 'Cáceres', 42);  -- Cáceres
 
-INSERT INTO embalse (nombre, capacidad, porcentaje_actual, es_navegable, localidad) VALUES 
-('Embalse de la Breña I', 320.50, 75.20, false, 14002), 
-('Embalse de la Breña II', 390.00, 65.45, true, 14002),  
-('Embalse de Iznájar', 1150.00, 80.50, true, 14020),  
-('Embalse de Cordobilla', 52.90, 55.00, false, 14002),  
-('Embalse de San Rafael de Navallana', 120.00, 50.30, true, 14001), 
-('Embalse de Guadalhorce', 115.00, 60.00, true, 14012),
-('Embalse de La Colada', 46.00, 45.00, false, 14005),  
-('Embalse de Zuheros', 40.00, 50.00, false, 14006),
-('Embalse de Ochavillo', 85.60, 65.00, true, 14007);  
+INSERT INTO embalse (nombre, capacidad, porcentaje_actual, es_navegable, localidad, tipo_presa) VALUES
+('Embalse de la Breña I', 320.50, 75.20, false, 14002, 1),
+('Embalse de la Breña II', 390.00, 65.45, true, 14002, 2),
+('Embalse de Iznájar', 1150.00, 80.50, true, 14020, 3),
+('Embalse de Cordobilla', 52.90, 55.00, false, 14002, 3),
+('Embalse de San Rafael de Navallana', 120.00, 50.30, true, 14001, 5),
+('Embalse de Guadalhorce', 115.00, 60.00, true, 14012, 1),
+('Embalse de La Colada', 46.00, 45.00, false, 14005, 2),
+('Embalse de Zuheros', 40.00, 50.00, false, 14006, 3),
+('Embalse de Ochavillo', 85.60, 65.00, true, 14007, 4);
 
 
 INSERT INTO especie (nombre_cientifico, nombre_comun, origen, url_imagen, peligro) VALUES
@@ -358,7 +364,3 @@ INSERT INTO especie (nombre_cientifico, nombre_comun, origen, url_imagen, peligr
 ('Chondrostoma nasus', 'Cacho', 'Europa, España', 'https://example.com/cacho.jpg', false),
 ('Chondrostoma turbidi', 'Boga', 'España', 'https://example.com/boga.jpg', true),
 ('Micropterus salmoides', 'Black bass', 'América del Norte', 'https://example.com/black_bass.jpg', false);
-
-
-use embalses;
-select * from embalse;
