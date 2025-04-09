@@ -1,5 +1,6 @@
 package com.ieslosalcores.api.embalses.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,11 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Habitat {
 
-    @JoinColumn(name ="especie")
+    @EmbeddedId
+    @JsonIgnore
+    private HabitatKey id;
+
+    @JoinColumn(name ="especie", insertable=false, updatable=false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Especie especie;
 
-    @JoinColumn(name="embalse")
+    @JoinColumn(name="embalse",  insertable=false, updatable=false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Embalse embalse;
 
