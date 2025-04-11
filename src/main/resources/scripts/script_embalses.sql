@@ -338,17 +338,26 @@ INSERT INTO localidad (cod_postal, nombre, provincia) VALUES (10017, 'Badajoz', 
 INSERT INTO localidad (cod_postal, nombre, provincia) VALUES (10018, 'La Vera', 42);  -- Cáceres
 INSERT INTO localidad (cod_postal, nombre, provincia) VALUES (10019, 'Cáceres', 42);  -- Cáceres
 
-INSERT INTO embalse (nombre, capacidad, porcentaje_actual, es_navegable, localidad, tipo_presa) VALUES
-('Embalse de la Breña I', 320.50, 75.20, false, 14002, 1),
-('Embalse de la Breña II', 390.00, 65.45, true, 14002, 2),
-('Embalse de Iznájar', 1150.00, 80.50, true, 14020, 3),
-('Embalse de Cordobilla', 52.90, 55.00, false, 14002, 3),
-('Embalse de San Rafael de Navallana', 120.00, 50.30, true, 14001, 5),
-('Embalse de Guadalhorce', 115.00, 60.00, true, 14012, 1),
-('Embalse de La Colada', 46.00, 45.00, false, 14005, 2),
-('Embalse de Zuheros', 40.00, 50.00, false, 14006, 3),
-('Embalse de Ochavillo', 85.60, 65.00, true, 14007, 4);
+insert into imagen (nombre, url) values
+('Breña2','https://almodovardelrio.es/wp-content/uploads/2015/11/descripcion_3-scaled.jpg'),
+('Navallana', 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Pantano_San_Rafael_de_Navallana_2.jpg'),
+('Ochavillo','https://static.eldiario.es/clip/c8a12c18-2b0b-4138-bfc1-d29f1c8a23f2_16-9-discover-aspect-ratio_default_0.jpg'),
+('Zuheros','https://photo620x400.mnstatic.com/d56ef6fccf59028e350396c5c8bfea7e/embalse-de-iznajar.jpg'),
+('Iznajar','https://static.eldiario.es/clip/e5f69502-cd3c-4aef-a966-2f4ee380c7c4_16-9-aspect-ratio_default_0.jpg'),
+('cordobilla','https://www.turismosevilla.org/sites/default/files/2021-03/BADOLATOSA-Embalse%20de%20Cordobilla%20%282%29.jpg'),
+('guadalhorce','https://i0.wp.com/www.gastroexperimenta.com/wp-content/uploads/2014/04/el-kiosco-embalse-conde-guadalhorce.jpg?resize=740%2C443'),
+('colada','https://www.acuaes.com/sites/default/files/actuaciones/imagenes/124-230109020416.jpg');
 
+INSERT INTO embalse (nombre, capacidad, porcentaje_actual, es_navegable, localidad, tipo_presa, imagen) VALUES
+('Embalse de la Breña I', 320.50, 75.20, false, 14002, 1,1),
+('Embalse de la Breña II', 390.00, 65.45, true, 14002, 2,1),
+('Embalse de Iznájar', 1150.00, 80.50, true, 14020, 3,5),
+('Embalse de Cordobilla', 52.90, 55.00, false, 14002, 3,6),
+('Embalse de San Rafael de Navallana', 120.00, 50.30, true, 14001, 5,2),
+('Embalse de Guadalhorce', 115.00, 60.00, true, 14012, 1,7),
+('Embalse de La Colada', 46.00, 45.00, false, 14005, 2,8),
+('Embalse de Zuheros', 40.00, 50.00, false, 14006, 3,4),
+('Embalse de Ochavillo', 85.60, 65.00, true, 14007, 4,3);
 
 INSERT INTO especie (nombre_cientifico, nombre_comun, origen, url_imagen, peligro) VALUES
 ('Salmo trutta', 'Trucha común', 'Europa, Asia', 'https://example.com/trucha_comun.jpg', false),
