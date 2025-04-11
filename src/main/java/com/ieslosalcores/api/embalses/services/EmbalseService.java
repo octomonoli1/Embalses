@@ -3,6 +3,7 @@ package com.ieslosalcores.api.embalses.services;
 import com.ieslosalcores.api.embalses.model.Embalse;
 import com.ieslosalcores.api.embalses.repositories.EmbalseRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
