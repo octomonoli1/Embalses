@@ -1,44 +1,35 @@
 package com.ieslosalcores.api.embalses.configuration.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import java.time.LocalDate;
+import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 
+@Component
 public class JWTUtil {
-    private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final String jwtSecret = "01234567890";
+    private final int jwtExpiration = 1000*60*5;
 
-    public static String generateToken(Map<String, Object> claims, String username){
+    public String generateToken(Authentication authentication) {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 31))
-                .signWith(SECRET_KEY)
+                .subject(principal.getUsername())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + this.jwtExpiration)) // 10 horas
+                .signWith(getSigningKey())
                 .compact();
     }
 
-    public static String getUsernameFromToken(String token){
-        return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
-
-    public static boolean isTokenExpired(String token){
-        Date expiration = Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
-
-        return expiration.before(new Date());
+    private Key getSigningKey(){
+        byte[] keyBytes = Decoders.BASE64.decode(this.jwtSecret);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

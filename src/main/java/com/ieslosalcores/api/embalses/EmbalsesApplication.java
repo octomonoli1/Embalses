@@ -9,5 +9,4 @@ public class EmbalsesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EmbalsesApplication.class, args);
 	}
-
 }
