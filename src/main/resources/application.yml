@@ -11,4 +11,5 @@ spring:
   jpa:
     show-sql: true
 jwt:
+  secret: bGV0LW1lLWdlbmVyYXRlLWEtcmFuZG9tLXNlY3JldC1rZXktZm9yLWhzMjU2
   expiration: 360000

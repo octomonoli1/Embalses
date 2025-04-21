@@ -2,6 +2,8 @@ package com.ieslosalcores.api.embalses.configuration.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,8 @@ import java.util.function.Function;
 @Component
 public class JWTUtil {
 
+    @Value("${jwt.secret}")
+    private String secretKey;
     @Value("${jwt.expiration}")
     private int jwtExpiration;
 
@@ -29,7 +33,7 @@ public class JWTUtil {
     }
 
     private SecretKey getSigningKey(){
-        return Jwts.SIG.HS256.key().build();
+        return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
