@@ -67,6 +67,24 @@ create table habitat(
     constraint fk_especie foreign key (especie) references especie(id)
 );
 
+CREATE TABLE authority (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    authority VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    enabled BOOLEAN DEFAULT TRUE,
+    authority int not null,
+    foreign key (authority) references authority(id)
+);
+
+insert into authority (authority) values ('ADMIN');
+insert into user (username, password, authority) values ('admin','admin', 1);
+
+
 -- Inserts
 INSERT INTO tipo_presa (nombre) VALUES ('Presa de gravedad');
 INSERT INTO tipo_presa (nombre) VALUES ('Presa de arco');
