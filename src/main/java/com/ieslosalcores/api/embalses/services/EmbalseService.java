@@ -25,4 +25,12 @@ public class EmbalseService {
         return embalseRepository.findById(id);
     }
 
+    public Embalse save(Embalse embalse){
+        return this.embalseRepository.save(embalse);
+    }
+
+    public void updateAll(List<Embalse> embalses){
+        embalses.forEach(embalse ->  this.embalseRepository.save(embalse));
+    }
+
 }

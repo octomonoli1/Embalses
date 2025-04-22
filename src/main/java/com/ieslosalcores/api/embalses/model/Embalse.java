@@ -13,21 +13,17 @@ public class Embalse {
 
     @Id
     private long id;
+    private String localizador;
+    private String tipo;
     private String nombre;
     private double capacidad;
-    private double porcentajeActual;
-    private boolean esNavegable;
+    private double capacidadActual;
+    private String provincia;
+    private String sistema;
+    private String cuenca;
+    private String rio;
+    private String localizacion;
+    private String presa;
 
-    @JoinColumn(name = "tipoPresa")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private TipoPresa tipoPresa;
-
-    @JoinColumn(name ="localidad")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Localidad localidad;
-
-    @JoinColumn(name ="imagen")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Imagen imagen;
 
 }

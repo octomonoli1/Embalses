@@ -17,8 +17,4 @@ public class Especie {
     private String nombreCientifico;
     private String origen;
     private boolean peligro;
-
-    @JoinColumn(name ="imagen")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Imagen imagen;
 }
