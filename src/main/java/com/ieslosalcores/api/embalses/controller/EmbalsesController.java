@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -36,7 +38,8 @@ public class EmbalsesController {
     @PostMapping("/sync")
     public ResponseEntity<List<Embalse>> syncEmbalse(){
         List<Embalse> result =  this.apiClient.getEmbalseData();
-        this.embalseService.updateAll(result);
+        Map<String,Object> estado = this.apiClient.getEstadoEmbalse();
+        this.embalseService.updateAll(result, estado);
         return ResponseEntity.ok(result);
     }
 }
