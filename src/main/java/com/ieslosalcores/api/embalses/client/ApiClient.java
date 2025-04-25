@@ -25,27 +25,39 @@ public class ApiClient {
     @Autowired
     public RestTemplate restTemplate;
 
-    private final String embalsesDataUrl = "https://portalrediam.cica.es/embalses/api/json/embalses";
-    private final String estadoEmbalsesFecha = "https://portalrediam.cica.es/embalses/api/json/andalucia";
+    private final String embalsesDataUrl = "https://portalrediam.cica.es/embalses/api/json/";
 
     public List<Embalse> getEmbalseData(){
-        return restTemplate.exchange(embalsesDataUrl, HttpMethod.GET, null,
+        return restTemplate.exchange(embalsesDataUrl + "/embalses", HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Embalse>>() {}
         ).getBody();
     }
 
     public Map<String,Object> getEstadoEmbalse(){
-        Date ayer = new Date();
+
+        Map<String,Object> result = restTemplate.exchange(embalsesDataUrl + "/andalucia/" + calculaAyer(), HttpMethod.GET, null,
+                new ParameterizedTypeReference<Map<String,Object>>() {}
+        ).getBody();
+
+        if(result!=null){
+            result.remove("fecha");
+            result.remove("fid");
+        }
+
+        return result;
+    }
+
+    private String calculaAyer(){
+        Date hoy = new Date();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(ayer);
+        calendar.setTime(hoy);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        ayer = calendar.getTime();
+        hoy = calendar.getTime();
 
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-        return restTemplate.exchange(estadoEmbalsesFecha + "/" + formatter.format(ayer), HttpMethod.GET, null,
-                new ParameterizedTypeReference<Map<String,Object>>() {}
-        ).getBody();
+
+        return formatter.format(hoy);
     }
 
 }

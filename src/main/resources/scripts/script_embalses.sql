@@ -4,7 +4,7 @@ create database embalses;
 use embalses;
 
 create table embalse(
-	id int primary key auto_increment,
+	id int primary key,
 	localizador char(3),
 	tipo varchar(50),
     nombre varchar(100),
@@ -14,7 +14,6 @@ create table embalse(
     sistema varchar(50),
     cuenca varchar(50),
     rio varchar(100),
-    localizacion varchar(250),
     presa varchar(100)
 );
 
@@ -51,3 +50,5 @@ CREATE TABLE user (
 
 insert into authority (authority) values ('ADMIN');
 insert into user (username, password, authority) values ('admin','admin', 1);
+
+select * from embalse;

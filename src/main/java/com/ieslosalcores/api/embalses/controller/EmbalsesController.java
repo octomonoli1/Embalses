@@ -4,12 +4,10 @@ import com.ieslosalcores.api.embalses.client.ApiClient;
 import com.ieslosalcores.api.embalses.model.Embalse;
 import com.ieslosalcores.api.embalses.services.EmbalseService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +36,7 @@ public class EmbalsesController {
     @PostMapping("/sync")
     public ResponseEntity<List<Embalse>> syncEmbalse(){
         List<Embalse> result =  this.apiClient.getEmbalseData();
-        Map<String,Object> estado = this.apiClient.getEstadoEmbalse();
-        this.embalseService.updateAll(result, estado);
-        return ResponseEntity.ok(result);
+        this.embalseService.updateAll(result, this.apiClient.getEstadoEmbalse());
+        return ResponseEntity.ok(this.embalseService.findAll());
     }
 }

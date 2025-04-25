@@ -1,5 +1,6 @@
 package com.ieslosalcores.api.embalses.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class Embalse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("fid")
     private long id;
-    @Column(name ="cod_est")
+    @JsonProperty("cod_est")
     private String localizador;
     private String tipo;
     private String nombre;
@@ -22,12 +23,11 @@ public class Embalse {
     private double capacidadActual;
     private String provincia;
     private String sistema;
-    @Column(name = "dist_dem")
+    @JsonProperty("dist_dem")
     private String cuenca;
-    @Column(name="nombre_rio")
+    @JsonProperty("nombre_rio")
     private String rio;
-    private String localizacion;
-    @Column(name="nom_pres")
+    @JsonProperty("nom_pres")
     private String presa;
 
 

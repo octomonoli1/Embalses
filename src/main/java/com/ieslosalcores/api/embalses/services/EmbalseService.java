@@ -33,8 +33,7 @@ public class EmbalseService {
     public void updateAll(List<Embalse> embalses, Map<String, Object> estados){
 
         embalses.forEach(embalse -> {
-            System.out.println(embalse.getLocalizador() + "-" + estados.get(embalse.getLocalizador()));
-            embalse.setCapacidadActual((Double)estados.get(embalse.getLocalizador()));
+            embalse.setCapacidadActual(Double.parseDouble(estados.get(embalse.getLocalizador()).toString()));
             embalseRepository.save(embalse);
         });
     }
